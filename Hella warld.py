@@ -11,4 +11,4 @@ def cube(arg1):
     return total;
 
 
-print(cube(1.2))
+print(cube(2))

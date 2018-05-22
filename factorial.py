@@ -1,8 +1,11 @@
 def factorial(arg1):
-    sum=1
+    tot=1
     if int(arg1)==arg1 and arg1>0:
         for i in range(arg1):
-            sum=sum*i
+            tot=tot*i
+        print(tot)
     else:
         print("You need to enter an integer")
-    print(sum)
+
+    return tot;
+factorial(3)
