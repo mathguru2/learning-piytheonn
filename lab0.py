@@ -64,13 +64,18 @@ def count_pattern(pattern, lst):
 # Problem 2.2: Expression depth
 
 def depth(expr):
-    raise NotImplementedError
+        if isinstance(expr, (list, tuple)):
+            return 1 + max(depth(item) for item in expr)
+        else:
+            return 0
 
 
 # Problem 2.3: Tree indexing
 
 def tree_ref(tree, index):
-    raise NotImplementedError
+    for i in index:
+        tree=tree[i]
+    return tree
 
 
 # Section 3: Symbolic algebra

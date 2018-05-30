@@ -9,3 +9,12 @@ def factorial(arg1):
 
     return tot;
 factorial(2)
+
+
+def tree_ref(tree, index):
+    for i in index:
+
+        tree=tree[i]
+    return tree
+
+print(tree_ref((((1, 2), 3), (4, (5, 6)), 7, (8, 9, 10)) ,(3,1)))

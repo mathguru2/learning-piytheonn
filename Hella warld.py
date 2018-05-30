@@ -1,14 +1,7 @@
-def cube(arg1):
-    if int(arg1):
-        if int(arg1)==arg1:
-            arg1=int(arg1)
-            total=arg1*arg1*arg1
+def depth(arg1):
+        if isinstance(arg1,(list,tuple)):
+            return 1+max(depth(item) for item in arg1)
         else:
-            print("put in an integer into the cube function")
-    else:
-        print("put in an integer into the cube function")
+            return 0
 
-    return total;
-
-
-print(cube(2))
+print(depth(('expt',('x',2))))
