@@ -16,7 +16,7 @@
 # the distributive law.
 
 # Your goal is to fill in the do_multiply() function so that multiplication
-# can be simplified as intended. 
+# can be simplified as intended.
 
 # Testing will be mathematical:  If you return a flat list that
 # evaluates to the same value as the original expression, you will
@@ -53,6 +53,7 @@ class Expression:
     "This abstract class does nothing on its own."
     pass
 
+
 class Sum(list, Expression):
     """
     A Sum acts just like a list in almost all regards, except that this code
@@ -67,9 +68,10 @@ class Sum(list, Expression):
       * You can convert an ordinary list to a sum with the Sum() constructor:
          the_sum = Sum(the_list)
     """
+
     def __repr__(self):
         return "Sum(%s)" % list.__repr__(self)
-    
+
     def simplify(self):
         """
         This is the starting point for the task you need to perform. It
@@ -97,9 +99,10 @@ class Product(list, Expression):
     See the documentation above for Sum. A Product acts almost exactly
     like a list, and can be converted to and from a list when necessary.
     """
+
     def __repr__(self):
         return "Product(%s)" % list.__repr__(self)
-    
+
     def simplify(self):
         """
         To simplify a product, we need to multiply all its factors together
@@ -128,6 +131,7 @@ class Product(list, Expression):
                 factors.append(factor)
         return Product(factors)
 
+
 def simplify_if_possible(expr):
     """
     A helper function that guards against trying to simplify a non-Expression.
@@ -136,6 +140,7 @@ def simplify_if_possible(expr):
         return expr.simplify()
     else:
         return expr
+
 
 # You may find the following helper functions to be useful.
 # "multiply" is provided for you; but you will need to write "do_multiply"
@@ -174,5 +179,35 @@ def do_multiply(expr1, expr2):
     '*' will not help you.
     """
     # Replace this with your solution.
-    raise NotImplementedError
+    if isinstance(expr1, Sum):
+        if isinstance(expr2, Sum):
 
+            expr3 = []
+            for i in range(0, len(expr1)):
+                for j in range(0, len(expr2)):
+                    expr3.append(Product([expr1[i], expr2[j]]))
+
+            return (Sum(simplify_if_possible(expr3)))
+        else:
+            expr3 = []
+            for i in range(0, len(expr1)):
+                expr3.append(Product([expr1[i], expr2]))
+            return (Sum(expr3))
+    else:
+        if isinstance(expr2, Sum):
+            return (do_multiply(expr2, expr1))
+        else:
+
+            expr3 = []
+            for i in range(0, len(expr1)):
+                expr3.append(expr1[i])
+
+            for j in range(0, len(expr2)):
+                expr3.append(expr2[j])
+
+            return (Product(simplify_if_possible(expr3)))
+
+
+expr1 = Product([1, 2, 3])
+expr2 = Sum([1, 2, 3])
+print(do_multiply(expr1, expr2))
