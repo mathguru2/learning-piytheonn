@@ -133,7 +133,7 @@ p00=IF('female (?x)',THEN('same (?x) (?x)'))
 p0=IF('male (?x)',THEN('same (?x) (?x)'))
 
 
-p1=IF( AND( 'parent (?x) (?y)','male (?y)'),THEN( '(son (?y) (?x)' ))
+p1=IF( AND( 'parent (?x) (?y)','male (?y)'),THEN( 'son (?y) (?x)' ))
 
 p2=IF(AND('parent (?x) (?y)','female (?y)'),THEN('daughter (?y) (?x)'))
 
@@ -175,7 +175,7 @@ simpsons_data = ("male bart",
                  "parent abe homer")
 TEST_RESULTS_6 = forward_chain(family_rules, simpsons_data,verbose=False)
 # You can test your results by uncommenting this line:
-print forward_chain(family_rules, simpsons_data, verbose=True)
+#print forward_chain(family_rules, simpsons_data, verbose=True)
 
 black_data = ("male sirius",
               "male regulus",
@@ -254,7 +254,7 @@ from backchain import backchain_to_goal_tree
 ##; Section 3: Survey ##
 # Please answer these questions inside the double quotes.
 
-HOW_MANY_HOURS_THIS_PSET_TOOK = ''
-WHAT_I_FOUND_INTERESTING = ''
-WHAT_I_FOUND_BORING = ''
+HOW_MANY_HOURS_THIS_PSET_TOOK = '2'
+WHAT_I_FOUND_INTERESTING = 'a'
+WHAT_I_FOUND_BORING = 'b'
 
