@@ -23,7 +23,7 @@
 #   3. Python v3.0
 # Fill in your answer in the next line of code ("1", "2", or "3"):
 
-ANSWER_1 = 'fill-me-in'
+ANSWER_1 = '2'
 
 
 # Section 2: Programming warmup _____________________________________________
@@ -31,32 +31,51 @@ ANSWER_1 = 'fill-me-in'
 # Problem 2.1: Warm-Up Stretch
 
 def cube(x):
-    raise NotImplementedError
+    tot=x*x*x
+    return tot;
 
 def factorial(x):
         tot = 1
         if int(x) == x and x > 0:
-            for i in range(x):
+            for i in range(1, x + 1):
                 tot = tot * i
-
+            print(tot)
         else:
             print("You need to enter an integer")
+
         return tot;
 
 def count_pattern(pattern, lst):
-    raise NotImplementedError
+    x = len(pattern)
+    y = len(lst)
+    total = 0
+    for i in range(1, y - x + 2):
+        match = 1
+        for j in range(1, x + 1):
+            if (lst[i - 1 + j - 1] == pattern[j - 1]):
+                dummy = 1
+            else:
+                dummy = 0
+            match = match * dummy
+        total = total + match
+    return total;
 
 
 # Problem 2.2: Expression depth
 
 def depth(expr):
-    raise NotImplementedError
+        if isinstance(expr, (list, tuple)):
+            return 1 + max(depth(item) for item in expr)
+        else:
+            return 0
 
 
 # Problem 2.3: Tree indexing
 
 def tree_ref(tree, index):
-    raise NotImplementedError
+    for i in index:
+        tree=tree[i]
+    return tree
 
 
 # Section 3: Symbolic algebra

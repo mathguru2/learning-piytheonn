@@ -53,7 +53,6 @@ class Expression:
     "This abstract class does nothing on its own."
     pass
 
-
 class Sum(list, Expression):
     """
     A Sum acts just like a list in almost all regards, except that this code
@@ -68,7 +67,6 @@ class Sum(list, Expression):
       * You can convert an ordinary list to a sum with the Sum() constructor:
          the_sum = Sum(the_list)
     """
-
     def __repr__(self):
         return "Sum(%s)" % list.__repr__(self)
 
@@ -99,7 +97,6 @@ class Product(list, Expression):
     See the documentation above for Sum. A Product acts almost exactly
     like a list, and can be converted to and from a list when necessary.
     """
-
     def __repr__(self):
         return "Product(%s)" % list.__repr__(self)
 
@@ -131,7 +128,6 @@ class Product(list, Expression):
                 factors.append(factor)
         return Product(factors)
 
-
 def simplify_if_possible(expr):
     """
     A helper function that guards against trying to simplify a non-Expression.
@@ -140,7 +136,6 @@ def simplify_if_possible(expr):
         return expr.simplify()
     else:
         return expr
-
 
 # You may find the following helper functions to be useful.
 # "multiply" is provided for you; but you will need to write "do_multiply"
