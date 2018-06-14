@@ -50,7 +50,7 @@ def instantiate(template, values_dict):
     replace those variables with values from values_dict.
 
     For example:
-    >>> instantiate("sister (?x) {?y)", {'x': 'Lisa', 'y': 'Bart'})
+    >>> instantiate("sister (?x) {?y}", {'x': 'Lisa', 'y': 'Bart'})
     => "sister Lisa Bart"
     """
     if (isinstance(template, AND) or isinstance(template, OR) or
