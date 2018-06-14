@@ -7,17 +7,17 @@
 
 # 1: True or false - Hill Climbing search is guaranteed to find a solution
 #    if there is a solution
-ANSWER1 = None
+ANSWER1 = False
 
 # 2: True or false - Best-first search will give an optimal search result
 #    (shortest path length).
 #    (If you don't know what we mean by best-first search, refer to
 #     http://courses.csail.mit.edu/6.034f/ai3/ch4.pdf (page 13 of the pdf).)
-ANSWER2 = None
+ANSWER2 = False
 
 # 3: True or false - Best-first search and hill climbing make use of
 #    heuristic values of nodes.
-ANSWER3 = None
+ANSWER3 = True
 
 # 4: True or false - A* uses an extended-nodes set.
 ANSWER4 = None
@@ -40,7 +40,27 @@ from search import Graph
 # The online tester will not test them.
 
 def bfs(graph, start, goal):
-    raise NotImplementedError
+    stack=[start]
+    visited=[]
+
+    while stack:
+        node=stack.pop()
+        if node==goal:
+            return visited
+        else:
+            if node not in visited:
+                visited.append(node)
+                for i in graph:
+                    if i.node1==node:
+                        stack.append(i.node2)
+                    if i.node2==node:
+                        stack.append(i.node1)
+
+
+
+
+
+
 
 ## Once you have completed the breadth-first search,
 ## this part should be very simple to complete.
