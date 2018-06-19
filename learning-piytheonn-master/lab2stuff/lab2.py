@@ -38,23 +38,56 @@ from search import Graph
 # If you implement these, the offline tester will test them.
 # If you don't, it won't.
 # The online tester will not test them.
-
 def bfs(graph, start, goal):
-    stack=[start]
-    visited=[]
+    stack={}
+    i=1
+    for u in graph.get_connected_nodes(start):
+        stack.append(graph.get_edge(start, u))
 
     while stack:
-        node=stack.pop()
-        if node==goal:
-            return visited
+        next=[]
+
+        topstack=stack.pop()
+        if len(topstack)==1:
+            if topstack.node1==start:
+                endofnode=topstack.node2
+            else:
+                endofnode=topstack.node1
+            if endofnode==goal:
+                return topstack
+
+            for u in graph.get_connected_nodes(endofnode):
+                if u != start:
+                    dummytopstack=topstack
+                    dummytopstack.append(graph.get_edge(endofnode,u))
+                    stack.append(dummytopstack)
+
         else:
-            if node not in visited:
-                visited.append(node)
-                for i in graph:
-                    if i.node1==node:
-                        stack.append(i.node2)
-                    if i.node2==node:
-                        stack.append(i.node1)
+            lastedge=topstack[len(topstack)-1]
+            nexttolastedge=topstack[len(topstack)-2]
+            if lastedge.node1==nexttolastedge.node1:
+                common=lastedge.node1
+                endofnode=lastedge.node2
+            elif lastedge.node1==nexttolastedge.node2:
+                common = lastedge.node1
+                endofnode = lastedge.node2
+            elif lastedge.node2==nexttolastedge.node1:
+                common = lastedge.node2
+                endofnode = lastedge.node1
+            else:##not needed as we know if node1 doesnt match node 2 must.
+                common = lastedge.node2
+                endofnode = lastedge.node1
+            if common == goal:
+                return topstack
+            for u in graph.get_connected_nodes(endofnode):
+                if u != common:
+                    dummytopstack=topstack
+                    dummytopstack.append(graph.get_edge(endofnode,u))
+                    stack.append(dummytopstack)
+
+
+
+
 
 
 
@@ -68,7 +101,7 @@ def dfs(graph, start, goal):
     raise NotImplementedError
 
 
-## Now we're going to add some heuristics into the search.  
+## Now we're going to add some heuristics into the search.
 ## Remember that hill-climbing is a modified version of depth-first search.
 ## Search direction should be towards lower heuristic values to the goal.
 def hill_climbing(graph, start, goal):
@@ -77,7 +110,7 @@ def hill_climbing(graph, start, goal):
 ## Now we're going to implement beam search, a variation on BFS
 ## that caps the amount of memory used to store paths.  Remember,
 ## we maintain only k candidate paths of length n in our agenda at any time.
-## The k top candidates are to be determined using the 
+## The k top candidates are to be determined using the
 ## graph get_heuristic function, with lower values being better values.
 def beam_search(graph, start, goal, beam_width):
     raise NotImplementedError
