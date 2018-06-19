@@ -39,58 +39,129 @@ from search import Graph
 # If you don't, it won't.
 # The online tester will not test them.
 def bfs(graph, start, goal):
-    stack={}
-    i=1
+    stack=[]
+    iiii=0
+    if goal==start:
+        return start
+
+    ##print(graph.get_connected_nodes(start))
     for u in graph.get_connected_nodes(start):
         stack.append(graph.get_edge(start, u))
+        ##print("46")
+        ##print(stack)
 
+    howbig=len(stack)
+    for i in range(0,howbig):
+        #print("51")
+        ##print(stack)
+        topstack=stack.pop(0)
+        ##print("topstack",topstack)
+        if topstack.node1 == start:
+            endofnode = topstack.node2
+        else:
+            endofnode = topstack.node1
+        if endofnode == goal:
+            ##print(topstack)
+            result = [start]
+            if topstack.node1 not in result:
+                result.append(topstack.node1)
+            if topstack.node2 not in result:
+                result.append(topstack.node2)
+            return result
+
+
+        for u in graph.get_connected_nodes(endofnode):
+            if u != start:
+
+                dummytopstack=(topstack,(graph.get_edge(endofnode, u)))
+                stack.append(dummytopstack)
+
+    ##print("stack 69",stack)
     while stack:
+        ##print (stack)
         next=[]
 
-        topstack=stack.pop()
-        if len(topstack)==1:
-            if topstack.node1==start:
-                endofnode=topstack.node2
-            else:
-                endofnode=topstack.node1
-            if endofnode==goal:
-                return topstack
-
-            for u in graph.get_connected_nodes(endofnode):
-                if u != start:
-                    dummytopstack=topstack
-                    dummytopstack.append(graph.get_edge(endofnode,u))
-                    stack.append(dummytopstack)
-
-        else:
-            lastedge=topstack[len(topstack)-1]
-            nexttolastedge=topstack[len(topstack)-2]
-            if lastedge.node1==nexttolastedge.node1:
-                common=lastedge.node1
-                endofnode=lastedge.node2
-            elif lastedge.node1==nexttolastedge.node2:
-                common = lastedge.node1
-                endofnode = lastedge.node2
-            elif lastedge.node2==nexttolastedge.node1:
-                common = lastedge.node2
-                endofnode = lastedge.node1
-            else:##not needed as we know if node1 doesnt match node 2 must.
-                common = lastedge.node2
-                endofnode = lastedge.node1
-            if common == goal:
-                return topstack
-            for u in graph.get_connected_nodes(endofnode):
-                if u != common:
-                    dummytopstack=topstack
-                    dummytopstack.append(graph.get_edge(endofnode,u))
-                    stack.append(dummytopstack)
+        topstack=stack.pop(0)
 
 
 
+        lastedge=topstack[len(topstack)-1]
+        nexttolastedge=topstack[len(topstack)-2]
+        if lastedge.node1==nexttolastedge.node1:
+            common=lastedge.node1
+            endofnode=lastedge.node2
+        elif lastedge.node1==nexttolastedge.node2:
+            common = lastedge.node1
+            endofnode = lastedge.node2
+        elif lastedge.node2==nexttolastedge.node1:
+            common = lastedge.node2
+            endofnode = lastedge.node1
+        else:##not needed as we know if node1 doesnt match node 2 must.
+            common = lastedge.node2
+            endofnode = lastedge.node1
+        if endofnode==goal:
+            result = [start]
+            dummy = list(topstack)
+            for x in range(0, len(dummy)):
+                if dummy[x].node1 not in result:
+                    result.append(dummy[x].node1)
+                if dummy[x].node2 not in result:
+                    result.append(dummy[x].node2)
+            ##result.append(goal)
+            return result
+        if common == goal:
+            result=[]
+            dummy=list(topstack)
+            result.append(start)
+            for x in range(0,len(dummy)):
+                if dummy[x].node1 not in result:
+                    result.append(dummy[x].node1)
+                if dummy[x].node2 not in result:
+                    result.append(dummy[x].node2)
+            return result
 
 
 
+        for u in graph.get_connected_nodes(endofnode):
+            dummyvar=list(topstack)
+            randomstuff=1
+            for qq in range(0,len(dummyvar)):
+                ##print("node1",dummyvar[qq].node1)
+                ##print("node2",dummyvar[qq].node2)
+                ##print("u",u)
+                if u == dummyvar[qq].node1:
+                    randomstuff=0
+                    ##print("node1 fail")
+                elif u == dummyvar[qq].node2:
+                    randomstuff=0
+                    ##print("node2 fail")
+                else:
+                    bird=1
+            dummytopstack=list(topstack)
+            ##print("topstack",topstack)
+            dummytopstack.append(graph.get_edge(endofnode,u))
+            if randomstuff ==1:
+                stack.append(dummytopstack)
 
+    return("error")
+
+
+NEWGRAPH1 = Graph(edgesdict=[
+        { 'NAME': 'e1',  'LENGTH':  6, 'NODE1': 'S', 'NODE2': 'A' },
+        { 'NAME': 'e2',  'LENGTH':  4, 'NODE1': 'A', 'NODE2': 'B' },
+        { 'NAME': 'e3',  'LENGTH':  7, 'NODE1': 'B', 'NODE2': 'F' },
+        { 'NAME': 'e4',  'LENGTH':  6, 'NODE1': 'C', 'NODE2': 'D' },
+        { 'NAME': 'e5',  'LENGTH':  3, 'NODE1': 'C', 'NODE2': 'A' },
+        { 'NAME': 'e6',  'LENGTH':  7, 'NODE1': 'E', 'NODE2': 'D' },
+        { 'NAME': 'e7',  'LENGTH':  6, 'NODE1': 'D', 'NODE2': 'H' },
+        { 'NAME': 'e8',  'LENGTH':  2, 'NODE1': 'S', 'NODE2': 'C' },
+        { 'NAME': 'e9',  'LENGTH':  2, 'NODE1': 'B', 'NODE2': 'D' },
+        { 'NAME': 'e10', 'LENGTH': 25, 'NODE1': 'E', 'NODE2': 'G' },
+        { 'NAME': 'e11', 'LENGTH':  5, 'NODE1': 'E', 'NODE2': 'C' } ])
+
+
+
+print(bfs(NEWGRAPH1,'S','H'))
 
 
 
