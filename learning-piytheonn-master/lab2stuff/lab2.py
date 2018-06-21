@@ -146,6 +146,59 @@ def bfs(graph, start, goal):
     return("error")
 
 
+
+
+
+
+## Once you have completed the breadth-first search,
+## this part should be very simple to complete.
+def dfs(graph, start, goal):
+##
+    raise NotImplementedError
+
+
+## Now we're going to add some heuristics into the search.
+## Remember that hill-climbing is a modified version of depth-first search.
+## Search direction should be towards lower heuristic values to the goal.
+def hill_climbing(graph, start, goal):
+    if start==goal:
+        return start
+    else:
+        stack=[start]
+        while stack:
+            huey=[]
+            topstack=stack.pop()
+            if goal==topstack[-1]:
+                return topstack
+            roger=graph.get_connected_nodes(topstack[-1])#i want to grab the last element of topstack.
+            #print("neighbor",roger)
+            #print(len(roger))
+            for i in range(0,len(roger)):
+                dummy1=graph.get_heuristic(roger[i],goal)
+
+                ##here is where I'm checking to make sure I don't go backwards
+                if roger[i] in topstack:
+                    dummy1=-1
+                huey.append(dummy1)
+
+            for j in roger:
+
+                ##this is where I put the code to find the max value
+                biggest=huey.index(max(huey))
+                #print("huey",huey)
+                #print(biggest)
+                ##Put in an if statement for biggest to check to see if it is -1
+                if huey[biggest]==-1:
+                    ducks=1
+                else:
+
+                    dumtopstack=list(topstack)
+                    dumtopstack.append(roger[biggest])
+                    stack.append(dumtopstack)
+                    huey[biggest]=-1
+
+            #print(stack)
+
 NEWGRAPH1 = Graph(edgesdict=[
         { 'NAME': 'e1',  'LENGTH':  6, 'NODE1': 'S', 'NODE2': 'A' },
         { 'NAME': 'e2',  'LENGTH':  4, 'NODE1': 'A', 'NODE2': 'B' },
@@ -157,26 +210,53 @@ NEWGRAPH1 = Graph(edgesdict=[
         { 'NAME': 'e8',  'LENGTH':  2, 'NODE1': 'S', 'NODE2': 'C' },
         { 'NAME': 'e9',  'LENGTH':  2, 'NODE1': 'B', 'NODE2': 'D' },
         { 'NAME': 'e10', 'LENGTH': 25, 'NODE1': 'E', 'NODE2': 'G' },
-        { 'NAME': 'e11', 'LENGTH':  5, 'NODE1': 'E', 'NODE2': 'C' } ])
+        { 'NAME': 'e11', 'LENGTH':  5, 'NODE1': 'E', 'NODE2': 'C' } ],
+                  heuristic={"G":{'S': 11,
+                                  'A': 9,
+                                  'B': 6,
+                                  'C': 12,
+                                  'D': 8,
+                                  'E': 15,
+                                  'F': 1,
+                                  'H': 2},
+                             "H":{'S': 11,
+                                  'A': 9,
+                                  'B': 6,
+                                  'D': 12,
+                                  'E': 8,
+                                  'F': 15,
+                                  'G': 14},
+                             'A':{'S':5, # admissible
+                                  "B":1, # h(d) > h(b)+c(d->b) ...  6 > 1 + 2
+                                  "C":3,
+                                  "D":6,
+                                  "E":8,
+                                  "F":11,
+                                  "G":33,
+                                  "H":12},
+                             'C':{"S":2, # consistent
+                                  "A":3,
+                                  "B":7,
+                                  "D":6,
+                                  "E":5,
+                                  "F":14,
+                                  "G":30,
+                                  "H":12},
+                             "D":{"D":3}, # dumb
+                             "E":{} # empty
+                             })
+print(hill_climbing(NEWGRAPH1,'F','G'))
 
 
 
-print(bfs(NEWGRAPH1,'S','H'))
 
 
 
 
-## Once you have completed the breadth-first search,
-## this part should be very simple to complete.
-def dfs(graph, start, goal):
-    raise NotImplementedError
 
 
-## Now we're going to add some heuristics into the search.
-## Remember that hill-climbing is a modified version of depth-first search.
-## Search direction should be towards lower heuristic values to the goal.
-def hill_climbing(graph, start, goal):
-    raise NotImplementedError
+
+
 
 ## Now we're going to implement beam search, a variation on BFS
 ## that caps the amount of memory used to store paths.  Remember,
